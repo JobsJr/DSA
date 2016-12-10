@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
@@ -196,4 +197,185 @@ public class GraphList {
 		}
 		stack.push(v);
 	}
+	/**
+	 * Checks if a Graph is Cyclic by checking if it has got any back edges
+	 * Src:http://www.geeksforgeeks.org/detect-cycle-in-a-graph/
+	 * 
+	 * @return
+	 */
+	public boolean isCyclic(){
+		boolean [] visited=new boolean[mVertexCount];
+		boolean [] recStack=new boolean[mVertexCount];
+		
+		for(int i=0;i<mVertexCount;i++){
+			visited[i]=false;
+			recStack[i]=false;
+		}
+		
+		for(int i=0;i<mVertexCount;i++){
+			if(!visited[i]){
+				if(isCyclicUtil(i, visited, recStack)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * 1.This Util method recursively checks if the node has already been visited
+	 * 		1.1 if yes,then check if it is there in recursion stack
+	 * 			1.1.1 if yes,then it is cyclic
+	 * 		1.2 If no, then check for its adjacent nodes in a similar way
+	 * 
+	 * This is Based on DFS
+	 * 
+	 * @param node
+	 * @param visited
+	 * @param recStack
+	 * @return
+	 */
+	private boolean isCyclicUtil(int node,boolean [] visited,boolean [] recStack){
+		visited[node]=true;
+		recStack[node]=true;
+		ArrayList<Integer>adjacentNodes=mAdjacencyMap.get(node);
+		if(adjacentNodes!=null){
+			Iterator<Integer>listIterator=adjacentNodes.listIterator();
+			while(listIterator.hasNext()){
+				int i=listIterator.next();
+				if(!visited[i] && isCyclicUtil(i, visited, recStack)){
+					return true;
+				}
+				
+				//Base Condition
+				if(recStack[i]){
+					return true;
+				}
+			}
+		}
+		
+		recStack[node]=false;//Reset everything,so that next iteration can use this
+		return false;
+	}
+	
+	//=============================Dijkstras Algo(START)============================//
+	
+	/**
+	 * Fetches the node with the minimum distance value & is not already
+	 * visited
+	 * @param visited
+	 * @param distance
+	 * @return
+	 */
+	
+	private int getMinDistanceIndex(boolean []visited,int []distance){
+		int minIndex=-1,minValue=Integer.MAX_VALUE;
+		for(int i=0;i<visited.length;i++){
+			if(!visited[i] && distance[i]<minValue){
+				minIndex=i;
+				minValue=distance[i];
+			}
+		}
+		return minIndex;
+		
+	}
+	
+	/**
+	 * Find Shortest path from src to all other nodes
+	 * Algo:Dijkstra's
+	 * http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijkstras-shortest-path-algorithm/
+	 * https://www.youtube.com/watch?v=pVfj6mxhdMw
+	 * @param graph
+	 * @param src
+	 */
+	public void dijSktrasSp(int [][]graph,int src){
+		boolean [] visited=new boolean[mVertexCount];
+		int [] distance=new int[mVertexCount];
+		
+		//Initialize distance & visited array
+		for(int i=0;i<mVertexCount;i++){
+			visited[i]=false;
+			distance[i]=Integer.MAX_VALUE;
+		}
+		
+		//Start with src.Since dist of src to src is 0
+		//This will be the trigger,so initiate it in the beginning itself
+		distance[src]=0;
+		
+		for(int i=0;i<mVertexCount;i++){
+			int u=getMinDistanceIndex(visited, distance);
+			//For i=0,it u will be src
+			visited[u]=true;
+			
+			for(int v=0;v<mVertexCount;v++){
+				if(!visited[v]
+				&& graph[u][v]!=0
+				&& distance[u]+graph[u][v]<distance[v]){
+					distance[v]=distance[u]+graph[u][v];
+				}
+			}
+			
+		}
+		printDistanceFromSrc(src, distance);
+		
+	}
+	
+	private void printDistanceFromSrc(int src,int [] distance){
+		System.out.println("Node"+"\t"+"Shortest Distance from Src "+src);
+		
+		for(int i=0;i<distance.length;i++){
+			System.out.println(i+"\t"+distance[i]);
+		}
+	}
+	
+	//=============================Dijkstras Algo(END)============================//
+	
+	
+	/**
+	 * Check if a route exists between Src to dest in a graph
+	 * Algo:simple BFS
+	 * TC:O(V+E)
+	 * 
+	 * @param src
+	 * @param destination
+	 * @return
+	 */
+	public boolean isRouteExists(int src,int destination){
+		boolean []visited=new boolean[mVertexCount];
+		
+		Queue<Integer>queue=new LinkedList<Integer>();
+		
+		//Initialize
+		for(int i=0;i<mVertexCount;i++){
+			visited[i]=false;
+		}
+		
+		queue.add(src);
+		visited[src]=true;
+		
+		while(!queue.isEmpty()){
+			int u=queue.poll();
+			
+			List<Integer>adjNodes=mAdjacencyMap.get(u);
+			if(!adjNodes.isEmpty()){
+				Iterator<Integer>iterator=adjNodes.listIterator();
+				while(iterator.hasNext()){
+					int v=iterator.next();
+					if(visited[v] && v==destination){
+						return true;
+					}else{
+						visited[v]=true;
+						queue.add(v);
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	
+	
+
 }
