@@ -3,7 +3,7 @@ package com.example.bitmanipulation;
 public class MagicNumber {
 
 	public static void main(String[] args) {
-		for(int i=1;i<=3;i++){
+		for(int i=1;i<3;i++){
 			System.out.println(i+" th magic number is "+getMagicNumber(i));
 		}
 
