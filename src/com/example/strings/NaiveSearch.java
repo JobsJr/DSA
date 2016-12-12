@@ -6,6 +6,14 @@ public class NaiveSearch {
 		findWord("AABAACAADAABAAABAA", "AABA");
 	}
 
+	/**
+	 * Pattern searching Naive approach
+	 * TC=O(N*(N-M))
+	 * SC=O(1)
+	 * 
+	 * @param input
+	 * @param key
+	 */
 	private static void findWord(String input, String key) {
 
 		if ((input != null && input.isEmpty())
