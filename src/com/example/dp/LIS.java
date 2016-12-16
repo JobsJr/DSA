@@ -41,8 +41,8 @@ public class LIS {
 		}
 		for(int i=1;i<array.length;i++){
 			for(int j=0;j<i;j++){
-				if(array[i]>array[j] && lsArray[i]<lsArray[j]+1){
-					lsArray[i]=lsArray[j]+1;
+				if(array[i]>array[j] ){
+					lsArray[i]=Math.max(lsArray[i], lsArray[j]+1);
 				}
 			}
 		}

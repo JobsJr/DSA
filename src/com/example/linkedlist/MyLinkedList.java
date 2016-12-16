@@ -66,7 +66,7 @@ public class MyLinkedList<T> {
 		//Check if headnode is null
 		//n
 		if(headnode==null){
-			System.out.println("Empty String");
+			System.out.println("Empty List");
 			return headnode;
 		}
 		
@@ -150,18 +150,4 @@ public class MyLinkedList<T> {
 
 	}
 	
-	public boolean isPalindrome(){
-		Node startRef=headnode;
-		Node endRef=headnode;
-		boolean isPalindrome=false;
-		
-		while(endRef!=null){
-			endRef=endRef.getNext();
-		}
-				
-		return false;
-	}
-	
-	
-
 }
