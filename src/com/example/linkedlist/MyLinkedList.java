@@ -205,4 +205,53 @@ public class MyLinkedList<T> {
 		}
 	}
 	
+	public void reArrangeList(Node head){
+		if(head == null){
+			throw new IllegalArgumentException("Empty list!!");
+		}
+		//Find middle of the list
+		Node midNode=getMidNode(head);
+		//Reverse after mid
+		Node prevNode=null;
+		Node nextNode=null;
+		
+		Node currentNode=midNode.getNext();
+		midNode.setNext(null);
+		while(currentNode!=null){
+			
+			nextNode=currentNode.getNext();
+			
+			currentNode.setNext(prevNode);
+			
+			prevNode=currentNode;
+			currentNode=nextNode;
+		}
+		
+		//Merge
+		mergeLinkedLists(head, prevNode);
+		
+		print();
+		
+	}
+	
+	/**
+	 * Get mid node of the list using Tortoise & Hare nethod
+	 * @param head
+	 * @return
+	 */
+	private Node getMidNode(Node head){
+		Node fastNode=head;
+		Node slowNode=head;
+		
+		while(fastNode.getNext()!=null){
+			slowNode=slowNode.getNext();
+			fastNode=fastNode.getNext();
+			if(fastNode!=null){
+				fastNode=fastNode.getNext();
+			}
+		}
+		
+		return slowNode;
+	}
+	
 }
