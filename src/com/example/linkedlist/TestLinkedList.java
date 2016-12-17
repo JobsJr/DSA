@@ -61,6 +61,30 @@ public class TestLinkedList {
 
 //*******************Palindrome************************//	
 //*******************Palindrome************************//	
+		
+/*************************Printing a list in reverse order***************/		
+		
+		myLinkedList.add(0);
+		myLinkedList.add(2);
+		myLinkedList.add(4);
+		myLinkedList.add(6);
+		myLinkedList.add(8);
+		
+	MyLinkedList<Integer> newList=new MyLinkedList<Integer>();
+	newList.add(1);
+	newList.add(3);
+	newList.add(5);
+	
+	myLinkedList.mergeLinkedLists(myLinkedList.getHeadNode(), newList.getHeadNode());
+	myLinkedList.print();
+
+
+		
+		
+		
+		
+/*************************Printing a list in reverse order***************/		
+
 
 
 

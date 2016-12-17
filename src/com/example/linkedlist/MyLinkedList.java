@@ -29,8 +29,10 @@ public class MyLinkedList<T> {
 		}
 		size++;
 	}
-	//Delete
-	
+
+	public Node getHeadNode(){
+		return headnode;
+	}
 	//Check size
 	public int size(){
 		return size;
@@ -148,6 +150,59 @@ public class MyLinkedList<T> {
 		
 		System.out.println(""+tempNode.getData());
 
+	}
+	
+	public void printReverse(Node headNode){
+		if(headNode.getNext()==null){
+			System.out.println(""+headNode.getData());
+			return;
+		}
+		printReverse(headNode.getNext());
+		System.out.println(""+headNode.getData());
+	}
+	
+	
+	public Node reverseLinkedList(Node currentNode){
+		Node prevNode=null;
+		Node nextNode=null;
+		
+		while(currentNode!=null){
+			//Move next node by 1
+			nextNode=currentNode.getNext();
+			
+			//Reverse the link of Current node in reverse
+			currentNode.setNext(prevNode);
+			
+			//Move previous & current by one
+			prevNode=currentNode;
+			currentNode=nextNode;
+		}
+		headnode=prevNode;
+		return headnode;
+	}
+	
+	public void mergeLinkedLists(Node pHead,Node qHead){
+		Node pCurr=pHead;
+		Node qCurr=qHead;
+		
+		Node pNext=null;
+		Node qNext=null;
+		
+		while(pCurr!=null && qCurr!=null){
+			
+			// Save next pointers
+			pNext = pCurr.getNext();
+            qNext = qCurr.getNext();
+ 
+            // make qCurr as next of pCurr
+            qCurr.setNext(pNext); // change next pointer of qCurr
+            pCurr.setNext(qCurr);  // change next pointer of pCurr
+ 
+            // update current pointers for next iteration
+            pCurr = pNext;
+            qCurr = qNext;
+            
+		}
 	}
 	
 }
