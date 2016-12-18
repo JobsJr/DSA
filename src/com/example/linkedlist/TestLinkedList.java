@@ -63,9 +63,8 @@ public class TestLinkedList {
 
 		myLinkedList.add(0);
 		myLinkedList.add(2);
-		myLinkedList.add(4);
-		myLinkedList.add(6);
-		myLinkedList.add(8);
+
+		myLinkedList.add(0);
 
 		// MyLinkedList<Integer> newList=new MyLinkedList<Integer>();
 		// newList.add(1);
@@ -79,10 +78,9 @@ public class TestLinkedList {
 
 		/************************* Printing a list in reverse order ***************/
 
-		System.out
-				.println("/*===============Rearranging list in a specific way====================*/");
-
-		myLinkedList.reArrangeList(myLinkedList.getHeadNode());
+		
+		//myLinkedList.reArrangeList(myLinkedList.getHeadNode());
+		System.out.println("isPalindrome: "+myLinkedList.isPalindrome(myLinkedList.getHeadNode()));
 
 	}
 

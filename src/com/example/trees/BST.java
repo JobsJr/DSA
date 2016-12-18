@@ -24,6 +24,7 @@ public class BST {
 		BSTNode currentNode=mRoot;	
 		BSTNode parentNode=null;
 		while(true){
+			//Parent node always stays one step behind current node
 			parentNode=currentNode;
 			if(data < parentNode.data){//Go left
 				//Check if there is left
@@ -155,6 +156,7 @@ public class BST {
 	 * Longest route from a given node to any given leaf of a tree
 	 * Height of tree=max(Height of left subtree,Height of right subtree)+1
 	 * 
+	 * TC:O(n) upper bound
 	 */
 	public int getHeight(BSTNode root){
 		
@@ -197,7 +199,8 @@ public class BST {
 	
 	
 	/**
-	 * Checking number of leaves in a tree
+	 * Checking number of leaves in a tree recursively for both
+	 * left & right trees if they exist
 	 */
 	public int getLeafs(BSTNode root){
 		if(root!=null && root.left==null && root.right==null)
@@ -330,7 +333,9 @@ public class BST {
 		}
 		
 		//for a BT to be BST, lData < pData AND rData >pData
-		//lData<-left node data rData<-rightNode data,pData<-root node data(parent)
+		//lData<-left node data
+		//rData<-rightNode data,
+		//pData<-root node data(parent)
 		
 		return isBST(root.left, min, root.data) &&
 				isBST(root.right,root.data,max);
